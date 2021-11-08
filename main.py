@@ -16,5 +16,11 @@ while True:
         if event.type == QUIT:
             pygame.exit()
             exit()
+        
+        # desenhando na tela
+        pygame.draw.rect(tela, (255, 0, 0), (200, 300, 40, 50))
+        pygame.draw.circle(tela, (0, 0, 255), (320, 240), 40)
+        pygame.draw.line(tela, (255, 255, 0), (390, 0), (390, 600), 5)
+
     pygame.display.update()
 
