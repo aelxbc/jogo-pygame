@@ -1,5 +1,5 @@
 import pygame as pg
-from pg.locals import *
+from pygame.locals import *
 from sys import exit
 from random import randint
 
@@ -13,11 +13,11 @@ pg.mixer.music.play(-1)
 barulho_colisao = pg.mixer.Sound('music/smw_coin.wav')
 largura = 640
 altura = 480
-x = largura / 2
-y = altura / 2 
+x_cobra = largura / 2
+y_cobra = altura / 2 
 
-x_blue = randint(40, 600) 
-y_blue = randint(50, 430)
+x_maca = randint(40, 600) 
+y_maca = randint(50, 430)
 
 pontos = 0
 
@@ -26,49 +26,68 @@ fonte = pg.font.SysFont('lucidaconsole', 30, True, True)
 tela = pg.display.set_mode((largura, altura))
 pg.display.set_caption('Jogo')
 relogio = pg.time.Clock()
+lista_cobra = []
+
+def aumenta_cobra(lista_cobra):
+    for XeY in lista_cobra:
+        #XeY = [x, y]
+        #XeY[0] = x
+        #XeY[1] = y
+        pg.draw.rect(tela, (0, 255, 0,0), (XeY[0], XeY[1], 20, 20))
+
+    pass
 
 while True:
     relogio.tick(60)
-    tela.fill((0,0,0))
+    tela.fill((255,255,255))
 
     mensagem = f'Pontos: {pontos}'
-    texto_formatado = fonte.render(mensagem, False, (255, 255, 255))
+    tex_cobrato_formatado = fonte.render(mensagem, False, (0, 0, 0))
 
     for event in pg.event.get():
         if event.type == QUIT:
             pg.exit()
             exit()
         '''
-        if event.type == KEYDOWN:
+        if event.ty_cobrape == keyDOWN:
             if event.key == K_a:
-                x -= 20
+                x_cobra -= 20
             if event.key == K_d:
-                x += 20
+                x_cobra += 20
             if event.key == K_w:
-                y -= 20
+                y_cobra -= 20
             if event.key == K_s:
-                y += 20
+                y_cobra += 20
         '''
     if pg.key.get_pressed()[K_a]:
         x_cobra -= 20
     if pg.key.get_pressed()[K_d]:
         x_cobra += 20
     if pg.key.get_pressed()[K_w]:
-        y_cobrea -= 20
+        y_cobra -= 20
     if pg.key.get_pressed()[K_s]:
         y_cobra += 20
 
     # desenhando na tela
-    ret_red = pg.draw.rect(tela, (255, 0, 0), (x, y, 40, 50))
-    ret_blue = pg.draw.rect(tela, (0, 0, 255), (x_blue, y_blue, 40, 50))
+    cobra = pg.draw.rect(tela, (0, 255, 0), (x_cobra, y_cobra, 20, 20))
+    maca = pg.draw.rect(tela, (255, 0, 0), (x_maca, y_maca, 20, 20))
     
-    if ret_red.colliderect(ret_blue):
-        x_blue = randint(40, 600) 
-        y_blue = randint(50, 430)
+    if cobra.colliderect(maca):
+        x_maca = randint(40, 600) 
+        y_maca = randint(50, 430)
         pontos += 1
         barulho_colisao.play()
+
     
-    tela.blit(texto_formatado, (400, 40))
+    lista_cabeca = []
+    lista_cabeca.append(x_cobra)
+    lista_cabeca.append(y_cobra)
+    lista_cobra.append(lista_cabeca)
+    aumenta_cobra(lista_cobra)
+
+
+    tela.blit(tex_cobrato_formatado, (400, 40))
+
 
 
     pg.display.update()
